@@ -7,7 +7,7 @@ export const useGuessList = () => {
   const guessRef = ref<XtxGuessInstance>()
   //滚动触底
   const onScrolltolower = () => {
-    // console.log('触底')
+    console.log('触底')
     guessRef.value?.getMore()
   }
   //返回

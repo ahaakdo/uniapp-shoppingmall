@@ -2,18 +2,23 @@
 //获取安全区域
 const { safeAreaInsets } = uni.getSystemInfoSync()
 console.log(safeAreaInsets)
+const onSearch = () => {
+  uni.switchTab({
+    url: '/pages/category/category',
+  })
+}
 </script>
 
 <template>
   <view class="navbar" :style="{ paddingTop: safeAreaInsets?.top + 'px' }">
     <!-- logo文字 -->
     <view class="logo">
-      <image class="logo-image" src="@/static/images/logo.png"></image>
+      <!-- <image class="logo-image" src="@/static/images/logo.png"></image> -->
       <text class="logo-text">新鲜 · 亲民 · 快捷</text>
     </view>
     <!-- 搜索条 -->
     <view class="search">
-      <text class="icon-search">搜索商品</text>
+      <text class="icon-search" @tap="onSearch">搜索商品</text>
       <text class="icon-scan"></text>
     </view>
   </view>

@@ -6,6 +6,9 @@ import type { BannerItem } from '@/types/home'
 import { onLoad } from '@dcloudio/uni-app'
 import { computed, ref } from 'vue'
 import PageSkelecton from '../index/components/PageSkelecton.vue'
+import { getSearchListAPI } from '@/services/search'
+//绑定搜索框内容
+const searchVal = ref<string>('')
 //获取轮播图
 const bannerList = ref<BannerItem[]>([])
 const getBannerData = async () => {
@@ -31,6 +34,38 @@ onLoad(async () => {
 const subCategoryList = computed(() => {
   return categoryList.value[activeIndex.value]?.children || []
 })
+//监听改变事件
+// const changeInput = async () => {
+//   console.log(searchVal.value)
+//   const res = await getSearchListAPI({ keyword: searchVal.value })
+//   console.log(res.result)
+// }
+//防抖效果
+// const debounce = (func: Function, wait = 800) => {
+//   //定义定时器
+//   let timer = null
+//   //清除定时器
+//   if (timer !== null) {
+//     clearTimeout(timer)
+//   }
+//   timer = setTimeout(() => {
+//     typeof func === 'function' && func()
+//   }, wait)
+// }
+//前往搜索列表
+const gotoSearchList = () => {
+  if (searchVal.value) {
+    uni.navigateTo({
+      url: `/pagesSearch/searchList/searchList?keyword=${searchVal.value}`,
+    })
+    searchVal.value = ''
+  } else {
+    uni.showToast({
+      icon: 'none',
+      title: '你未输入搜索内容',
+    })
+  }
+}
 </script>
 
 <template>
@@ -38,7 +73,8 @@ const subCategoryList = computed(() => {
     <!-- 搜索框 -->
     <view class="search">
       <view class="input">
-        <text class="icon-search">女靴</text>
+        <input v-model="searchVal" placeholder="请输入搜索内容" />
+        <button class="button" @tap="gotoSearchList">搜索</button>
       </view>
     </view>
     <!-- 分类 -->
@@ -113,7 +149,15 @@ page {
     color: #8b8b8b;
     font-size: 28rpx;
     border-radius: 32rpx;
-    background-color: #f3f4f4;
+    background-color: #f4f3f3;
+    width: 900rpx;
+
+    .button {
+      background-color: #05b483;
+      height: 100%;
+      line-height: 64rpx;
+      color: #fff;
+    }
   }
 }
 

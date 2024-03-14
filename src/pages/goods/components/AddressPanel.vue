@@ -3,7 +3,9 @@ import { getMemberAddressAPI } from '@/services/address'
 import type { AddressItem } from '@/types/address'
 import { onShow } from '@dcloudio/uni-app'
 import { ref } from 'vue'
+import { useAddressStore } from '@/stores/modules/address'
 
+const addressStore = useAddressStore()
 //子调父
 const emit = defineEmits<{
   (event: 'close'): void
@@ -12,6 +14,19 @@ const emit = defineEmits<{
 defineProps<{
   addressList: AddressItem[]
 }>()
+// const address = ref<AddressItem>()
+//切换地址
+const onChangeAddress = (item: AddressItem) => {
+  console.log(item.isDefault)
+  addressStore.getBuyNowAddress(item)
+  console.log(addressStore.buyNowAddress)
+  emit('close')
+}
+//跳转添加地址
+const gotoAdd = () => {
+  uni.navigateTo({ url: '/pagesMember/address-form/address-form' })
+  emit('close')
+}
 </script>
 
 <template>
@@ -22,15 +37,15 @@ defineProps<{
     <view class="title">配送至</view>
     <!-- 内容 -->
     <view class="content">
-      <view class="item" v-for="item in addressList" :key="item.id">
+      <view class="item" v-for="item in addressList" :key="item.id" @tap="onChangeAddress(item)">
         <view class="user">{{ item.receiver }} {{ item.contact }}</view>
         <view class="address">{{ item.fullLocation }} {{ item.address }}</view>
-        <text class="icon" :class="{ 'icon-checked': item.isDefault }"></text>
+        <!-- <text class="icon" :class="{ 'icon-checked': item.isDefault }"></text> -->
       </view>
     </view>
     <view class="footer">
-      <view class="button primary"> 新建地址 </view>
-      <view v-if="false" class="button primary">确定</view>
+      <view class="button primary" @tap="gotoAdd"> 新建地址 </view>
+      <!-- <view v-if="addressList.length" class="button primary">确定</view> -->
     </view>
   </view>
 </template>

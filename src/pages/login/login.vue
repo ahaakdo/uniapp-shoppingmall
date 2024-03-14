@@ -19,7 +19,7 @@ const onGetphonenumber: UniHelper.ButtonOnGetphonenumber = async (ev) => {
 }
 //模拟手机号接口
 const onGetphonenumberSimple = async () => {
-  const res = await postLoginWxMinSimpleAPI('13510570270')
+  const res = await postLoginWxMinSimpleAPI('13510570271')
   loginSucess(res.result)
 }
 const loginSucess = (profile: LoginResult) => {
@@ -34,7 +34,7 @@ const loginSucess = (profile: LoginResult) => {
   })
   //跳转页面
   setTimeout(() => {
-    uni.switchTab({ url: '/pages/my/my' })
+    uni.navigateBack()
   }, 500)
 }
 </script>
@@ -42,9 +42,7 @@ const loginSucess = (profile: LoginResult) => {
 <template>
   <view class="viewport">
     <view class="logo">
-      <image
-        src="https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/images/logo_icon.png"
-      ></image>
+      <image src="C:\Users\dyh\Desktop\uniapp\uniapp-shop\src\static\images\bg.jpg"></image>
     </view>
     <view class="login">
       <!-- 网页端表单登录 -->
